@@ -47,6 +47,7 @@ class ProductverViewScreen extends StatelessWidget {
         title: Text("My Shop"),
       ),
       body: GridView.builder(
+        padding: const EdgeInsets.all(10.0),
         itemCount: loadedProducts.length,
         itemBuilder: (context, index) => ProductItem(
           id: loadedProducts[index].id,
@@ -54,10 +55,11 @@ class ProductverViewScreen extends StatelessWidget {
           imageUrl: loadedProducts[index].imageUrl,
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 10,
           crossAxisCount: 2,
           childAspectRatio: 3 / 2,
           crossAxisSpacing: 10,
-          mainAxisExtent: 10,
+          mainAxisExtent: 110,
         ),
       ),
     );
