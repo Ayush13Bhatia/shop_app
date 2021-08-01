@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Home_page.dart';
+import '../screens/products_overview_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: "Shop App",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.purple),
-      home: Homepage(),
+      home: ProductverViewScreen(),
     );
   }
 }
