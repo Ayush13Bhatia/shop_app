@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import '../providers/product.dart';
-import '../widgets/product_grid.dart';
+import 'product.dart';
 
-class ProductverViewScreen extends StatelessWidget {
-  ProductverViewScreen({Key? key}) : super(key: key);
-
-  List<Product> item = [
+class Products with ChangeNotifier {
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -40,13 +37,16 @@ class ProductverViewScreen extends StatelessWidget {
     ),
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Shop"),
-      ),
-      body: ProductGrid(),
-    );
+  List<Product> get items {
+    return [..._items];
+  }
+
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
+  void addProduct() {
+    // _items.add();
+    notifyListeners();
   }
 }
