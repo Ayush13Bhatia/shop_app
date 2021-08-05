@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/screens/cart_screen.dart';
+import '../providers/Cart.dart';
 import '../providers/product.dart';
 import '../widgets/product_grid.dart';
+import '../widgets/badge.dart';
+import '../providers/Cart.dart';
 
-class ProductverViewScreen extends StatelessWidget {
+enum FilterOption {
+  Favorite,
+  All,
+}
+
+class ProductverViewScreen extends StatefulWidget {
   ProductverViewScreen({Key? key}) : super(key: key);
 
-  List<Product> item = [
+  @override
+  _ProductverViewScreenState createState() => _ProductverViewScreenState();
+}
+
+class _ProductverViewScreenState extends State<ProductverViewScreen> {
+  var _showOnlyFavorite = false;
+  final List<Product> item = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -45,8 +61,42 @@ class ProductverViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("My Shop"),
+        actions: [
+          PopupMenuButton(
+              onSelected: (FilterOption selectedValue) {
+                setState(() {
+                  if (selectedValue == FilterOption.Favorite) {
+                    _showOnlyFavorite = true;
+                  } else {
+                    _showOnlyFavorite = false;
+                  }
+                });
+              },
+              icon: Icon(
+                Icons.more_vert,
+              ),
+              itemBuilder: (_) => [
+                    PopupMenuItem(
+                        child: Text("My favorite"),
+                        value: FilterOption.Favorite),
+                    PopupMenuItem(
+                        child: Text("Show All"), value: FilterOption.All),
+                  ]),
+          Consumer<Cart>(
+            builder: (_, cart, child) => Badge(
+              child: child,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart_outlined),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          ),
+        ],
       ),
-      body: ProductGrid(),
+      body: ProductGrid(showFav: _showOnlyFavorite),
     );
   }
 }
