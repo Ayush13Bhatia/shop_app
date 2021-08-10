@@ -103,15 +103,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     Navigator.of(context);
   }
 
-  // bool _hasImage = true;
   @override
   Widget build(BuildContext context) {
-    // _imageUrlController.addListener(() {
-    //   setState(() {
-    //     _hasImage = _imageUrlController.text.isEmpty;
-    //   });
-    // });
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
