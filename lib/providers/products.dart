@@ -76,10 +76,10 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void updatProduct(String id, String newProduct) {
+  void updatProduct(String id, Product newProduct) {
     final prodIndex = items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      _items[prodIndex] = newProduct as Product;
+      _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
       print('......');
