@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../screens/edit_product_screen.dart';
 import '../providers/products.dart';
-import '../providers/products.dart';
 
 class UserProductItem extends StatelessWidget {
   const UserProductItem({Key? key, this.id, this.title, this.imageUrl})

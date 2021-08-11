@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,8 +24,9 @@ class _OrderItemState extends State<OrderItem> {
         children: [
           ListTile(
             title: Text('\$${widget.order!.amount}'),
-            subtitle: Text(DateFormat('dd/mm/yyyy hh:mm ')
-                .format(widget.order!.dateTime!)),
+            subtitle: Text(
+              DateFormat('dd/mm/yyyy hh:mm ').format(widget.order!.dateTime!),
+            ),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
