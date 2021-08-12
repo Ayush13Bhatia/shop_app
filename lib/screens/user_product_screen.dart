@@ -8,7 +8,7 @@ import '../providers/products.dart';
 
 class UserProductScreen extends StatelessWidget {
   const UserProductScreen({Key? key}) : super(key: key);
-  static const routeName = "/user-prodcut";
+  static const routeName = "/user-prodcuts";
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class UserProductScreen extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: ListView.builder(
           itemCount: productsData.items.length,
-          itemBuilder: (context, i) => Column(
+          itemBuilder: (_, i) => Column(
             children: [
               UserProductItem(
                 id: productsData.items[i].id,
