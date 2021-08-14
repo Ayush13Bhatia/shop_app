@@ -10,7 +10,7 @@ class OrderItem {
   OrderItem({this.id, this.amount, this.products, this.dateTime});
 }
 
-class Order with ChangeNotifier {
+class Orders with ChangeNotifier {
   List<OrderItem> _orders = [];
 
   List<OrderItem> get orders {

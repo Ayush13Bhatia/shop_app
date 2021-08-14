@@ -30,6 +30,7 @@ class CartItem extends StatelessWidget {
           size: 40,
         ),
         alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20),
         margin: EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
@@ -69,7 +70,10 @@ class CartItem extends StatelessWidget {
           child: ListTile(
             leading: FittedBox(
               child: CircleAvatar(
-                child: FittedBox(child: Text("\$$price")),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: FittedBox(child: Text("\$$price")),
+                ),
               ),
             ),
             title: Text(title!),

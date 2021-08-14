@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import '../providers/products.dart';
 import '../providers/product.dart';
 
-class EditProductScreen extends StatefulWidget {
-  const EditProductScreen({Key? key}) : super(key: key);
-  static const routeName = '/edit-product';
+class AddProductScreen extends StatefulWidget {
+  const AddProductScreen({Key? key}) : super(key: key);
+  static const routeName = "/add-product";
 
   @override
-  _EditProductScreenState createState() => _EditProductScreenState();
+  _AddProductScreenState createState() => _AddProductScreenState();
 }
 
-class _EditProductScreenState extends State<EditProductScreen> {
+class _AddProductScreenState extends State<AddProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
@@ -43,22 +43,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
-      final productId = ModalRoute.of(context)?.settings.arguments as String;
-      if (productId != null) {
-        _editedProduct =
-            Provider.of<Products>(context, listen: false).findById(productId);
-
-        _initValues = {
-          'title': _editedProduct.title!,
-          'description': _editedProduct.description!,
-          'price': _editedProduct.price!.toString(),
-          'imageUrl': '',
-        };
-        _imageUrlController.text = _editedProduct.imageUrl!;
-      }
-    }
-    _isInit = false;
     super.didChangeDependencies();
   }
 
