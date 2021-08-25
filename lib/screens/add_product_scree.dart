@@ -171,7 +171,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     if (value!.isEmpty) {
                       return "Please enter the description";
                     }
-                    if (value.length < 10) {
+                    if (value.length < 2) {
                       return "Please enter at-least greate the 10 characters";
                     }
                   },
