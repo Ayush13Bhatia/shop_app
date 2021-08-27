@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'product.dart';
@@ -7,6 +9,10 @@ import 'dart:convert';
 // castor oil
 // clerify ml(ai)
 class Products with ChangeNotifier {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference products =
+      FirebaseFirestore.instance.collection('products');
+
   List<Product> _items = [
     Product(
       id: 'p1',
@@ -68,19 +74,18 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
-    // final url = Uri.https(
-    //     'https://flutter-update-c91a9-default-rtdb.firebaseio.com',
-    //     '/products.json');
-    final url =
-        Uri.parse('https://flutter-update.firebaseio.com/products.json');
-    http.post(url,
-        body: json.encode({
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavorote': product.isFavorite,
-        }));
+    // final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
+    // http.post(url,
+    //     body: json.encode({
+    products.add(<String, dynamic>{
+      'title': product.title,
+      'description': product.description,
+      'imageUrl': product.imageUrl,
+      'price': product.price,
+      'isFavorote': product.isFavorite,
+    });
+
+    // ));
     final newProduct = Product(
       title: product.title,
       description: product.description,

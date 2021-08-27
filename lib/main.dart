@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/screens/add_product_scree.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 import '../screens/edit_product_screen.dart';
 import '../screens/user_product_screen.dart';
@@ -12,7 +13,10 @@ import '../screens/products_overview_screen.dart';
 import '../screens/product_details_screen.dart';
 import '../providers/products.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await firebase_core.Firebase.initializeApp();
+
   runApp(MyApp());
 }
 

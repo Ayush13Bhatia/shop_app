@@ -90,7 +90,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: Text('Add Product'),
         actions: [
           IconButton(
             onPressed: _saveForm,
