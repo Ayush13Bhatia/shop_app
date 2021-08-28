@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'product.dart';
-import 'dart:convert';
 
 // haveenta
 // castor oil
@@ -73,30 +71,27 @@ class Products with ChangeNotifier {
   //   _showOnlyFavorite = false;
   // }
 
-  void addProduct(Product product) {
-    // final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
-    // http.post(url,
-    //     body: json.encode({
-    products.add(<String, dynamic>{
+  Future<void> addProduct(Product product) async {
+    return products.add(<String, dynamic>{
       'title': product.title,
       'description': product.description,
       'imageUrl': product.imageUrl,
       'price': product.price,
       'isFavorote': product.isFavorite,
+    }).then((response) {
+      print(response.id);
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: response.id,
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct);   // at start of the list
+
+      notifyListeners();
     });
-
-    // ));
-    final newProduct = Product(
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-      id: DateTime.now().toString(),
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);   // at start of the list
-
-    notifyListeners();
   }
 
   void updatProduct(String id, Product newProduct) {
