@@ -6,6 +6,7 @@ import '../widgets/app_drawer.dart';
 import '../providers/cart.dart';
 import '../widgets/product_grid.dart';
 import '../widgets/badge.dart';
+import '../providers/products.dart';
 
 enum FilterOption {
   Favorite,
@@ -21,6 +22,7 @@ class ProductverViewScreen extends StatefulWidget {
 
 class _ProductverViewScreenState extends State<ProductverViewScreen> {
   var _showOnlyFavorite = false;
+  var _isInit = true;
   // final List<Product> item = [
   //   Product(
   //     id: 'p1',
@@ -55,6 +57,25 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
   //         'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
   //   ),
   // ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Products>(context).fetchAndSetProducts();
+    }
+    _isInit = false;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

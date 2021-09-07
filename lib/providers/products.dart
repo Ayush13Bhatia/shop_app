@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'product.dart';
@@ -71,15 +74,25 @@ class Products with ChangeNotifier {
   //   _showOnlyFavorite = false;
   // }
 
+  Future<void> fetchAndSetProducts() async {
+    final url = "https://flutter-update-c91a9-default-rtdb.firebaseio.com/";
+    try {
+      final reponse = await Uri.parse(url);
+      print(reponse.data);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> addProduct(Product product) async {
-    return products.add(<String, dynamic>{
-      'title': product.title,
-      'description': product.description,
-      'imageUrl': product.imageUrl,
-      'price': product.price,
-      'isFavorote': product.isFavorite,
-    }).then((response) {
-      print(response.id);
+    try {
+      final response = await products.add(<String, dynamic>{
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorote': product.isFavorite,
+      });
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -91,10 +104,10 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct);   // at start of the list
 
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw error;
-    });
+    }
   }
 
   void updatProduct(String id, Product newProduct) {
