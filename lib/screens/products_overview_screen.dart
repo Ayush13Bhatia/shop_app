@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/product.dart';
 
 import '../screens/cart_screen.dart';
 import '../widgets/app_drawer.dart';
@@ -23,7 +24,7 @@ class ProductverViewScreen extends StatefulWidget {
 class _ProductverViewScreenState extends State<ProductverViewScreen> {
   var _showOnlyFavorite = false;
   var _isInit = true;
-  // final List<Product> item = [
+  // List<Product> item = [
   //   Product(
   //     id: 'p1',
   //     title: 'Red Shirt',
@@ -61,8 +62,8 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // Future.delayed(Duration(seconds: 30)).then((_) {
+    //   Provider.of<Products>(context, listen: false).fetchAndSetProducts();
     // });
     super.initState();
   }
