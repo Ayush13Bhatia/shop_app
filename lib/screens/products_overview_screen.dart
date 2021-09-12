@@ -62,18 +62,18 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    // Future.delayed(Duration(seconds: 30)).then((_) {
-    //   Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-    // });
+    Future.delayed(Duration.zero).then((_) {
+      Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    });
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
-      Provider.of<Products>(context).fetchAndSetProducts();
-    }
-    _isInit = false;
+    // if (_isInit) {
+    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // }
+    // _isInit = false;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }

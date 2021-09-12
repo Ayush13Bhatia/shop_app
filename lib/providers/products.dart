@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -78,32 +79,29 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     try {
-      DocumentSnapshot snapshot =
-          await products.doc('2HbDMrlTlrZFGqiWD7IO').get();
-
-      var data = snapshot.data() as Map<String, dynamic>;
-      print(data);
-      print('Ayush Bhatia');
-      print(snapshot.id);
-      print(snapshot['isFavorote']);
-      print(snapshot['title']);
-
-      List<Product> _loadedProducts = [];
-
-      data.forEach((key, value) {
-        _loadedProducts.add(Product(
-          description: snapshot['description'],
-          price: snapshot['price'],
-          title: snapshot['title'],
-          isFavorite: snapshot['isFavorote'],
-          imageUrl: snapshot['imageUrl'],
-          id: snapshot.id,
-        ));
+      FirebaseFirestore.instance
+          .collection('products')
+          .snapshots()
+          .listen((snapshot) {
+        List<Product> _loadedProducts = [];
+        snapshot.docs.forEach((document) {
+          _loadedProducts.add(
+            Product(
+              description: document.data()['description'],
+              price: document.data()['price'],
+              title: document.data()['title'],
+              isFavorite: document.data()['isFavorite'],
+              imageUrl: document.data()['imageUrl'],
+              id: document.id,
+            ),
+          );
+        });
+        // print('*******Ayush*******');
+        // print(_loadedProducts);
+        _items = _loadedProducts;
+        // print(_items);
       });
 
-      _items = _loadedProducts;
-
-      // print(data);
       notifyListeners();
     } catch (error) {
       throw (error);
@@ -119,7 +117,7 @@ class Products with ChangeNotifier {
         'description': product.description,
         'imageUrl': product.imageUrl,
         'price': product.price,
-        'isFavorote': product.isFavorite,
+        'isFavorite': product.isFavorite,
       });
       print(response.id);
       final newProduct = Product(
