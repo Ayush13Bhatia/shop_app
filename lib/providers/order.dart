@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'cart.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderItem {
   final String? id;
@@ -11,19 +12,47 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
+  CollectionReference ordersItems =
+      FirebaseFirestore.instance.collection('Orders');
   List<OrderItem> _orders = [];
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
-  void addOrder(List<CartItem> cartProduct, double total) {
+  Future<void> fetchAndSetOrders() async {
+    try {
+      FirebaseFirestore.instance
+          .collection('Orders')
+          .snapshots()
+          .listen((snapshot) {});
+
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<void> addOrder(List<CartItem> cartProduct, double total) async {
+    final timestamp = DateTime.now();
+    final response = await ordersItems.add({
+      'amount': total,
+      'dateTime': timestamp.toIso8601String(),
+      'products': cartProduct
+          .map((cp) => {
+                'id': cp.id,
+                'title': cp.title,
+                'quantity': cp.quantity,
+                'price': cp.price,
+              })
+          .toList(),
+    });
     _orders.insert(
         0,
         OrderItem(
-          id: DateTime.now().toString(),
+          id: response.id,
           amount: total,
-          dateTime: DateTime.now(),
+          dateTime: timestamp,
           products: cartProduct,
         ));
     notifyListeners();

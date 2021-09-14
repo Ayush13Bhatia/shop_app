@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem(
+  CartItem(
       {Key? key,
       this.id,
       this.productId,

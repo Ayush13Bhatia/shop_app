@@ -8,6 +8,7 @@ import '../screens/product_details_screen.dart';
 class ProductItem extends StatelessWidget {
   const ProductItem({
     Key? key,
+    this.id,
     // this.id,
     // this.title,
     // this.imageUrl,
@@ -15,6 +16,7 @@ class ProductItem extends StatelessWidget {
   // final String? id;
   // final String? title;
   // final String? imageUrl;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {

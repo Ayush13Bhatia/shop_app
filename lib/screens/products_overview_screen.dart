@@ -30,6 +30,7 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
   @override
   void initState() {
     // TODO: implement initState
+
     Future.delayed(Duration.zero).then((_) {
       Provider.of<Products>(context, listen: false).fetchAndSetProducts();
     });

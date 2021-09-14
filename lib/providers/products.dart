@@ -1,5 +1,4 @@
 import 'dart:async';
-// import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +10,6 @@ import 'product.dart';
 // castor oil
 // clerify ml(ai)
 class Products with ChangeNotifier {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference products =
       FirebaseFirestore.instance.collection('products');
 
@@ -117,7 +115,7 @@ class Products with ChangeNotifier {
         'price': product.price,
         'isFavorite': product.isFavorite,
       });
-      print(response.id);
+      // print(response.id);
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -135,9 +133,15 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updatProduct(String id, Product newProduct) {
+  Future<void> updatProduct(String id, Product newProduct) async {
     final prodIndex = items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      await products.doc(id).update({
+        'title': newProduct.title,
+        'description': newProduct.description,
+        'price': newProduct.price,
+        'imageUrl': newProduct.imageUrl,
+      });
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
@@ -145,8 +149,15 @@ class Products with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
+    // final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
+    // var existingProduct = _items[existingProductIndex];
+    // _items.removeAt(existingProductIndex);
+
     _items.removeWhere((prod) => prod.id == id);
+    await products.doc(id).delete().catchError((error) {
+      throw (error);
+    });
     notifyListeners();
   }
 }

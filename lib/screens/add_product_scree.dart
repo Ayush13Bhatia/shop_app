@@ -42,10 +42,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -82,7 +82,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       _isLoading = true;
     });
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updatProduct(_editedProduct.id!, _editedProduct);
       setState(() {
         _isLoading = false;
@@ -106,12 +106,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         child: Text("Okay"))
                   ],
                 ));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
+      // finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     }
   }
 

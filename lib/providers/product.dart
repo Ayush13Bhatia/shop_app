@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product with ChangeNotifier {
   final String? id;
@@ -16,8 +17,17 @@ class Product with ChangeNotifier {
     required this.imageUrl,
     this.isFavorite = false,
   });
-  void toggleFavoriteStatus() {
+  Future<void> toggleFavoriteStatus() async {
+    final oldStatus = isFavorite;
     isFavorite = !isFavorite!;
     notifyListeners();
+    try {
+      await FirebaseFirestore.instance.collection('products').doc(id).update({
+        "isFavorite": isFavorite,
+      });
+    } catch (error) {
+      isFavorite = oldStatus;
+      notifyListeners();
+    }
   }
 }
