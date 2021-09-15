@@ -23,6 +23,7 @@ class ProductverViewScreen extends StatefulWidget {
 class _ProductverViewScreenState extends State<ProductverViewScreen> {
   var _showOnlyFavorite = false;
   var _isInit = true;
+
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
   }
@@ -31,9 +32,10 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
   void initState() {
     // TODO: implement initState
 
-    Future.delayed(Duration.zero).then((_) {
-      Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-    });
+    // Future.delayed(Duration.zero).then((_) {
+    Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+
+    // });
     super.initState();
   }
 
