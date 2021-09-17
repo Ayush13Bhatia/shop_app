@@ -23,6 +23,7 @@ class ProductverViewScreen extends StatefulWidget {
 class _ProductverViewScreenState extends State<ProductverViewScreen> {
   var _showOnlyFavorite = false;
   var _isInit = true;
+  var _isLoading = false;
 
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
@@ -30,24 +31,24 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
-    // Future.delayed(Duration.zero).then((_) {
-    Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-
-    // });
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-  //   }
-  //   _isInit = false;
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +91,13 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
         ],
       ),
       drawer: AppDrawers(),
-      body: RefreshIndicator(
-          onRefresh: () => _refreshProducts(context),
-          child: ProductGrid(showFav: _showOnlyFavorite)),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : RefreshIndicator(
+              onRefresh: () => _refreshProducts(context),
+              child: ProductGrid(showFav: _showOnlyFavorite)),
     );
   }
 }
