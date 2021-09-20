@@ -65,14 +65,6 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  // void showFavoriteOnly() {
-  //   _showOnlyFavorite = true;
-  // }
-
-  // void show() {
-  //   _showOnlyFavorite = false;
-  // }
-
   Future<void> fetchAndSetProducts() async {
     try {
       FirebaseFirestore.instance
@@ -106,9 +98,7 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     try {
-      CollectionReference products =
-          FirebaseFirestore.instance.collection('products');
-      final response = await products.add(<String, dynamic>{
+      final response = await products.add({
         'title': product.title,
         'description': product.description,
         'imageUrl': product.imageUrl,
@@ -116,14 +106,14 @@ class Products with ChangeNotifier {
         'isFavorite': product.isFavorite,
       });
       // print(response.id);
-      final newProduct = Product(
+      Product(
         title: product.title,
         description: product.description,
         price: product.price,
         imageUrl: product.imageUrl,
         id: response.id,
       );
-      _items.add(newProduct);
+      // _items.add(newProduct);
       // _items.insert(0, newProduct);   // at start of the list
 
       notifyListeners();
@@ -150,10 +140,6 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    // final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
-    // var existingProduct = _items[existingProductIndex];
-    // _items.removeAt(existingProductIndex);
-
     _items.removeWhere((prod) => prod.id == id);
     await products.doc(id).delete().catchError((error) {
       throw (error);

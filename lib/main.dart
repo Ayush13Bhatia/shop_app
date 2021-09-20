@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/add_product_scree.dart';
+
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
+import '../screens/auth_screen.dart';
+import '../providers/auth.dart';
+import '../screens/add_product_scree.dart';
 import '../screens/edit_product_screen.dart';
 import '../screens/user_product_screen.dart';
 import '../screens/order_screen.dart';
 import '../providers/order.dart';
 import '../screens/cart_screen.dart';
 import '../providers/cart.dart';
-import '../screens/products_overview_screen.dart';
+// import '../screens/products_overview_screen.dart';
 import '../screens/product_details_screen.dart';
 import '../providers/products.dart';
 
@@ -28,6 +31,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => Products(),
         ),
         ChangeNotifierProvider(
@@ -45,7 +51,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepOrange,
           fontFamily: "Lato",
         ),
-        home: ProductverViewScreen(),
+        home: AuthScreen(),
         routes: {
           ProductDetailsScree.routename: (context) => ProductDetailsScree(),
           CartScreen.routeName: (context) => CartScreen(),
