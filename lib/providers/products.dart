@@ -50,6 +50,10 @@ class Products with ChangeNotifier {
 
   // var _showOnlyFavorite = false;
 
+  late final String? authToken;
+
+  Products(this.authToken, this._items);
+
   List<Product> get items {
     // if (_showOnlyFavorite) {
     //   return _items.where((prod) => prod.isFavorite!).toList();
