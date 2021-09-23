@@ -17,14 +17,20 @@ class Product with ChangeNotifier {
     required this.imageUrl,
     this.isFavorite = false,
   });
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String token, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite!;
     notifyListeners();
     try {
-      await FirebaseFirestore.instance.collection('products').doc(id).update({
+      await FirebaseFirestore.instance
+          .collection('userFavorites')
+          .doc(userId)
+          .set({
         "isFavorite": isFavorite,
       });
+      print('!!!!!!!Ayush!!!!!!!!');
+      print(userId);
+      print(id);
     } catch (error) {
       isFavorite = oldStatus;
       notifyListeners();

@@ -6,8 +6,12 @@ class Auth with ChangeNotifier {
   DateTime? _expirtyTime;
   String? _userId;
 
+  String get userId {
+    return _userId!;
+  }
+
   bool get isAuth {
-    print("*******Ayush*****");
+    // print("*******Ayush*****");
     // print(token);
     return token != null;
   }
@@ -29,10 +33,16 @@ class Auth with ChangeNotifier {
       );
 
       print('######Ayush########');
-      // print(auth);
+      print(auth);
       _token = auth.user!.uid;
-      print(auth.user!.uid);
-      print(_token);
+      _userId = _token;
+      print('!#!#!#Ayush!#!#!#');
+      print(auth.user!.providerData[0].uid);
+
+      print('~~~~Ayush~~~~');
+
+      // print(auth.user!.uid);
+      // print(_token);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

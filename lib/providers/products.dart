@@ -71,12 +71,18 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     try {
+      // final favoriteData =
+      //     FirebaseFirestore.instance.collection('userFavorites').doc();
+      // print('%%%%%%%%%Ayush%%%%%%%%%');
+      // print(favoriteData.get());
       FirebaseFirestore.instance
           .collection('products')
           .snapshots()
           .listen((snapshot) {
         List<Product> _loadedProducts = [];
         snapshot.docs.forEach((document) {
+          // print('!@!@!@!@!Ayush!@!@@!@!@');
+          // print(document.data());
           _loadedProducts.add(
             Product(
               description: document.data()['description'],
@@ -85,6 +91,7 @@ class Products with ChangeNotifier {
               isFavorite: document.data()['isFavorite'],
               imageUrl: document.data()['imageUrl'],
               id: document.id,
+              // authToken: document.data()['token'],
             ),
           );
         });
@@ -110,7 +117,7 @@ class Products with ChangeNotifier {
         'isFavorite': product.isFavorite,
       });
       // print(response.id);
-      Product(
+      final newProduct = Product(
         title: product.title,
         description: product.description,
         price: product.price,

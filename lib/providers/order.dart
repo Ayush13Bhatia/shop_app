@@ -15,7 +15,10 @@ class OrderItem {
 class Orders with ChangeNotifier {
   CollectionReference ordersItems =
       FirebaseFirestore.instance.collection('OrdersItems');
+
   List<OrderItem> _orders = [];
+  final String? authToken;
+  Orders(this.authToken, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
