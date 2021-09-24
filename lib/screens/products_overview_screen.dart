@@ -74,7 +74,9 @@ class _ProductverViewScreenState extends State<ProductverViewScreen> {
                         child: Text("My favorite"),
                         value: FilterOption.Favorite),
                     PopupMenuItem(
-                        child: Text("Show All"), value: FilterOption.All),
+                      child: Text("Show All"),
+                      value: FilterOption.All,
+                    ),
                   ]),
           Consumer<Cart>(
             builder: (_, cart, child) => Badge(

@@ -5,6 +5,7 @@ class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expirtyTime;
   String? _userId;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   String get userId {
     return _userId!;
@@ -24,7 +25,7 @@ class Auth with ChangeNotifier {
     return null;
   }
 
-  Future<void> signIn(String? email, String? password) async {
+  Future<void> login(String? email, String? password) async {
     try {
       UserCredential auth =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -55,8 +56,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signUp(String? email, String? password) async {
     try {
-      UserCredential auth =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      _auth.createUserWithEmailAndPassword(
         email: email!,
         password: password!,
       );
@@ -70,6 +70,14 @@ class Auth with ChangeNotifier {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> logOut() async {
+    if (_token == null && _userId == null) {
+      return await _auth.signOut();
+    } else {
+      return null;
     }
   }
 }

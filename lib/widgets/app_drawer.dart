@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/screens/auth_screen.dart';
 
+import '../providers/auth.dart';
 import '../screens/user_product_screen.dart';
 import '../screens/order_screen.dart';
 
@@ -12,7 +15,7 @@ class AppDrawers extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text("Hello Friends"),
+            title: Text("Menu"),
             automaticallyImplyLeading: false,
           ),
           Divider(),
@@ -37,6 +40,18 @@ class AppDrawers extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text("Sign Out"),
+            onTap: () {
+              Provider.of<Auth>(context, listen: false).logOut();
+
+              Navigator.of(context).pop();
+
+              // Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
             },
           )
         ],

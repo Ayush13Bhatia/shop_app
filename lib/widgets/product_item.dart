@@ -7,17 +7,17 @@ import '../providers/product.dart';
 import '../screens/product_details_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({
-    Key? key,
-    this.id,
-    // this.id,
-    // this.title,
-    // this.imageUrl,
-  }) : super(key: key);
+  // const ProductItem({
+  //   Key? key,
+  //   this.id,
+  //   // this.id,
+  //   // this.title,
+  //   // this.imageUrl,
+  // }) : super(key: key);
+  // // final String? id;
+  // // final String? title;
+  // // final String? imageUrl;
   // final String? id;
-  // final String? title;
-  // final String? imageUrl;
-  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +28,15 @@ class ProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(ProductDetailsScree.routename,
-                arguments: product.id);
-          },
-          child: Image.network(
-            product.imageUrl!,
-            fit: BoxFit.cover,
-          ),
-        ),
+            onTap: () {
+              Navigator.of(context).pushNamed(ProductDetailsScree.routename,
+                  arguments: product.id);
+            },
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              image: NetworkImage(product.imageUrl!),
+              fit: BoxFit.cover,
+            )),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
@@ -72,6 +72,7 @@ class ProductItem extends StatelessWidget {
                 ),
               );
             },
+            focusColor: Theme.of(context).accentColor,
           ),
         ),
       ),

@@ -23,14 +23,13 @@ class Product with ChangeNotifier {
     notifyListeners();
     try {
       await FirebaseFirestore.instance
-          .collection('userFavorites')
-          .doc(userId)
-          .set({
+          // .collection('userFavorites')
+          // .doc(userId)
+          .collection('products')
+          .doc(id)
+          .update({
         "isFavorite": isFavorite,
       });
-      print('!!!!!!!Ayush!!!!!!!!');
-      print(userId);
-      print(id);
     } catch (error) {
       isFavorite = oldStatus;
       notifyListeners();

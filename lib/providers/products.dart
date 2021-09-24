@@ -71,10 +71,6 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     try {
-      // final favoriteData =
-      //     FirebaseFirestore.instance.collection('userFavorites').doc();
-      // print('%%%%%%%%%Ayush%%%%%%%%%');
-      // print(favoriteData.get());
       FirebaseFirestore.instance
           .collection('products')
           .snapshots()
@@ -94,14 +90,14 @@ class Products with ChangeNotifier {
               // authToken: document.data()['token'],
             ),
           );
+          // notifyListeners();
         });
         // print('*******Ayush*******');
         // print(_loadedProducts);
         _items = _loadedProducts;
         // print(_items);
+        notifyListeners();
       });
-
-      notifyListeners();
     } catch (error) {
       throw (error);
     }
