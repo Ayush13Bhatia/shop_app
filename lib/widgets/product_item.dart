@@ -7,18 +7,6 @@ import '../providers/product.dart';
 import '../screens/product_details_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  // const ProductItem({
-  //   Key? key,
-  //   this.id,
-  //   // this.id,
-  //   // this.title,
-  //   // this.imageUrl,
-  // }) : super(key: key);
-  // // final String? id;
-  // // final String? title;
-  // // final String? imageUrl;
-  // final String? id;
-
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
@@ -32,10 +20,14 @@ class ProductItem extends StatelessWidget {
               Navigator.of(context).pushNamed(ProductDetailsScree.routename,
                   arguments: product.id);
             },
-            child: FadeInImage(
-              placeholder: AssetImage('assets/images/product-placeholder.png'),
-              image: NetworkImage(product.imageUrl!),
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: product.id!,
+              child: FadeInImage(
+                placeholder:
+                    AssetImage('assets/images/product-placeholder.png'),
+                image: NetworkImage(product.imageUrl!),
+                fit: BoxFit.cover,
+              ),
             )),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
